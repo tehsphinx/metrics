@@ -1,0 +1,66 @@
+linters-settings:
+  govet:
+    check-shadowing: true
+  golint:
+    min-confidence: 0.8
+  gocyclo:
+    min-complexity: 20
+  maligned:
+    suggest-new: true
+  depguard:
+    list-type: blacklist
+    include-go-root: false
+    packages:
+      # use git.rrdc.de/lib/errors instead
+      - errors
+      - github.com/pkg/errors
+      # allow logrus only in lg package
+      - github.com/sirupsen/logrus
+      - github.com/tehsphinx/dbg
+      # suppress other packages
+      - flag
+      - github.com/namsral/flag
+      - github.com/bmizerany/assert
+  lll:
+    line-length: 150
+  nakedret:
+    max-func-lines: 10
+
+linters:
+  enable:
+    - golint
+    - unconvert
+    - goconst
+    - gocyclo
+    - goimports
+    - maligned
+    - depguard
+    - lll
+    - nakedret
+    - scopelint
+    - gocritic
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - gocyclo
+        - errcheck
+        - dupl
+        - gosec
+        - gocritic
+        - depguard
+    - text: "Using the variable on range scope `tt` in function literal"
+      linters:
+        - scopelint
+
+  exclude-use-default: false
+  exclude:
+    # errcheck: Almost all programs ignore errors on these functions and in most cases it's ok
+    - Error return value of .((os\.)?std(out|err)\..*|.*Close|.*Flush|os\.Remove(All)?|.*printf?|os\.(Un)?Setenv). is not checked
+
+    # golint: False positive when tests are defined in package 'test'
+    - func name will be used as test\.Test.* by other packages, and that stutters; consider calling this
+
+    # govet: shadowing of err variable
+    - declaration of "err" shadows declaration at

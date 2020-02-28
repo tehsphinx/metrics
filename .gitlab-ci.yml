@@ -1,0 +1,53 @@
+variables:
+  GOPROXY: "http://192.168.10.58:3000"
+  GO111MODULE: "on"
+
+before_script:
+  - echo $CI_BUILD_REF
+  - echo $CI_COMMIT_REF_SLUG
+  - echo $CI_PROJECT_DIR
+  - echo $GOPROXY
+  - echo $GO111MODULE
+  - ls -la
+  - git clone https://git.rrdc.de/shared/scripts.git && chmod +x scripts/* && cp scripts/* /usr/local/bin
+
+stages:
+  - verify
+
+go_test:
+  image: golang:1.14.0
+  stage: verify
+  allow_failure: false
+  tags:
+    - unix
+    - docker
+    - multi
+  script:
+    - go mod download
+    - go test -tags testing -race -cover ./...
+
+golangci-lint:
+  image: golang:1.14.0
+  stage: verify
+  allow_failure: true
+  tags:
+    - unix
+    - docker
+    - multi
+  script:
+    - go mod download
+    - golangci-lint.sh -b $(go env GOPATH)/bin v1.21.0
+    - cd $CI_PROJECT_DIR
+    - golangci-lint run
+
+gomod-check:
+  image: golang:1.14.0
+  stage: verify
+  allow_failure: true
+  tags:
+    - unix
+    - docker
+    - multi
+  script:
+    - go mod download
+    - go_mod_tidy.sh
