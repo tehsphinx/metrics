@@ -1,8 +1,13 @@
 # InfluxDB Metrics Reporter
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/tehsphinx/metrics)](https://goreportcard.com/report/github.com/tehsphinx/metrics)
+<a href="/LICENSE.md"><img alt="Software License" src="https://img.shields.io/github/license/tehsphinx/metrics"></a>
+<a href="https://github.com/tehsphinx/metrics/issues"><img alt="Issues" src="https://img.shields.io/github/issues/tehsphinx/metrics"></a>
+<img alt="Stars" src="https://img.shields.io/github/stars/tehsphinx/metrics">
+<a href="https://godoc.org/github.com/tehsphinx/metrics"><img src="https://godoc.org/github.com/tehsphinx/metrics?status.svg" alt="GoDoc"></a>
+
 Package metrics is based on [github.com/rcrowley/go-metrics](https://github.com/rcrowley/go-metrics) and loosely inspired
 by [github.com/vrischmann/go-metrics-influxdb](https://github.com/vrischmann/go-metrics-influxdb).
-
 
 ## Why?
 
