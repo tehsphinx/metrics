@@ -16,11 +16,13 @@ Why write a new package if there already is a influxDB reporter?
 The main difference between this package and `vrischmann/go-metrics-influxdb` is the API.
 This API is based on the `go-metrics` api and separates the registry (built into the Reporter) from the measurement/metrics.
 This enables a global Reporter and the creation of independant metrics distributed across
-the codebase without passing the Reporter around. A reporter can however be injected into a metrics if needed.
+the codebase without passing the Reporter around. A reporter can however be injected into a metric if needed.
 
 With `vrischmann/go-metrics-influxdb` a reporter can only handle one measurement, 
 meaning a new reporter is needed per measurement. This entails more goroutines and 
 more calls to the influxDB in larger applications with multiple measurements.
+
+Metrics collection has been optimized in regards to memory allocations to be fast and have less impact on the GC.
 
 ## Usage
 
@@ -74,8 +76,8 @@ metric := metrics.NewGauge("MetricName", metrics.WithMeasurement("MeasurementNam
 For working code see the [multiple-reporters example](examples/multiple_reporters/main.go).
 
 :warning: When creating multiple repoters use the `Registry` option to supply a new registry to each reporter.
-If multiple reporters are created without this option, they all use the default registry. 
-Meaning all reporters will report data from all the metrics.
+If multiple reporters are created without this option, they will all use the default registry:
+all reporters will report data from all the metrics.
 
 ### Metrics
 
