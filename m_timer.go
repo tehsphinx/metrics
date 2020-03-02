@@ -60,48 +60,51 @@ func (s *timer) AddPoints(pts []client.Point) []client.Point {
 	)
 
 	for _, bucket := range s.buckets {
-		var val float64
-		switch bucket {
-		case count:
-			val = float64(ms.Count())
-		case max:
-			val = float64(ms.Max())
-		case mean:
-			val = ms.Mean()
-		case min:
-			val = float64(ms.Min())
-		case stddev:
-			val = ms.StdDev()
-		case variance:
-			val = ms.Variance()
-		case p50:
-			val = ps[0]
-		case p75:
-			val = ps[1]
-		case p95:
-			val = ps[2]
-		case p99:
-			val = ps[3]
-		case p999:
-			val = ps[4]
-		case p9999:
-			val = ps[5]
-		case m1:
-			val = ms.Rate1()
-		case m5:
-			val = ms.Rate5()
-		case m15:
-			val = ms.Rate15()
-		case meanrate:
-			val = ms.RateMean()
-		}
-
 		fields := s.bucketVals[bucket]
-		fields[s.fieldName] = val
+		fields[s.fieldName] = getValue(bucket, ms, ps)
 
 		pts = append(pts, getPoint(s.measurement, fields, s.bucketTags[bucket]))
 	}
 	return pts
+}
+
+func getValue(bucket string, snapshot metrics.Timer, percentiles []float64) float64 {
+	var val float64
+	switch bucket {
+	case count:
+		val = float64(snapshot.Count())
+	case max:
+		val = float64(snapshot.Max())
+	case mean:
+		val = snapshot.Mean()
+	case min:
+		val = float64(snapshot.Min())
+	case stddev:
+		val = snapshot.StdDev()
+	case variance:
+		val = snapshot.Variance()
+	case p50:
+		val = percentiles[0]
+	case p75:
+		val = percentiles[1]
+	case p95:
+		val = percentiles[2]
+	case p99:
+		val = percentiles[3]
+	case p999:
+		val = percentiles[4]
+	case p9999:
+		val = percentiles[5]
+	case m1:
+		val = snapshot.Rate1()
+	case m5:
+		val = snapshot.Rate5()
+	case m15:
+		val = snapshot.Rate15()
+	case meanrate:
+		val = snapshot.RateMean()
+	}
+	return val
 }
 
 // TimeThis measure starts a timer and returns a function to stop the time and report it.
