@@ -2,7 +2,7 @@
 // by github.com/vrischmann/go-metrics-influxdb. The main difference of this package
 // and `vrischmann/go-metrics-influxdb` is the API. The API is based on the `go-metrics`
 // api and separates the registry (built into the Reporter) from the measurement/metrics.
-// This enables a global Reporter and the creation of independant metrics distributed across
+// This enables a global Reporter and the creation of independent metrics distributed across
 // the codebase without passing the Reporter around. A reporter can however be injected
 // into a metrics if needed.
 package metrics

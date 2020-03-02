@@ -63,7 +63,7 @@ func Test_bucketTags(t *testing.T) {
 			want: map[string]string{"foo1": "bar1", "foo3": "bar3"},
 		},
 		{
-			name: "add bucket to emtpy tags list",
+			name: "add bucket to empty tags list",
 			args: args{
 				bucket: "buckFoo",
 				tags:   nil,
