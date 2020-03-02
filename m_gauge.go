@@ -5,6 +5,11 @@ import (
 	"github.com/rcrowley/go-metrics"
 )
 
+// Gauge implements go-metrics.Gauge and possibly adds a bit functionality.
+type Gauge interface {
+	metrics.Gauge
+}
+
 func newGauge(name string, options ...Option) *gauge {
 	m := newMetric(name, options...)
 	m.suffix = suffGauge

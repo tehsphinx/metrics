@@ -1,9 +1,18 @@
 package metrics
 
 import (
+	"time"
+
 	client "github.com/influxdata/influxdb1-client"
 	"github.com/rcrowley/go-metrics"
 )
+
+// Timer implements go-metrics.Timer and possibly adds a bit functionality.
+type Timer interface {
+	metrics.Timer
+
+	TimeThis() func()
+}
 
 func newTimer(name string, options ...Option) *timer {
 	m := newMetric(name, options...)
@@ -93,4 +102,13 @@ func (s *timer) AddPoints(pts []client.Point) []client.Point {
 		pts = append(pts, getPoint(s.measurement, fields, s.bucketTags[bucket]))
 	}
 	return pts
+}
+
+// TimeThis measure starts a timer and returns a function to stop the time and report it.
+// Can be used as `defer timer.TimeThis()()`.
+func (s *timer) TimeThis() func() {
+	t := time.Now()
+	return func() {
+		s.UpdateSince(t)
+	}
 }

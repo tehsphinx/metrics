@@ -5,6 +5,11 @@ import (
 	"github.com/rcrowley/go-metrics"
 )
 
+// Histogram implements go-metrics.Histogram and possibly adds a bit functionality.
+type Histogram interface {
+	metrics.Histogram
+}
+
 func newHistogram(name string, options ...Option) *histogram {
 	m := newMetric(name, options...)
 	m.suffix = suffHistogram

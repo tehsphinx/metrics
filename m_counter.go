@@ -5,6 +5,11 @@ import (
 	"github.com/rcrowley/go-metrics"
 )
 
+// Counter implements go-metrics.Counter and possibly adds a bit functionality.
+type Counter interface {
+	metrics.Counter
+}
+
 func newCounter(name string, options ...Option) *counter {
 	m := newMetric(name, options...)
 	m.suffix = suffCounter

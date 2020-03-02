@@ -5,6 +5,11 @@ import (
 	"github.com/rcrowley/go-metrics"
 )
 
+// Meter implements go-metrics.Meter and possibly adds a bit functionality.
+type Meter interface {
+	metrics.Meter
+}
+
 func newMeter(name string, options ...Option) *meter {
 	m := newMetric(name, options...)
 	m.suffix = suffMeter

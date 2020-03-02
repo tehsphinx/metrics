@@ -42,27 +42,27 @@ func Register(name string, metric Metric, options ...Option) error {
 }
 
 // NewCounter creates a new counter or retrieves an existing counter with the same name.
-func NewCounter(name string, options ...Option) metrics.Counter {
+func NewCounter(name string, options ...Option) Counter {
 	return newCounter(name, options...)
 }
 
 // NewGauge creates a new gauge or retrieves an existing gauge with the same name.
-func NewGauge(name string, options ...Option) metrics.Gauge {
+func NewGauge(name string, options ...Option) Gauge {
 	return newGauge(name, options...)
 }
 
 // NewGaugeFloat64 creates a new gauge with float64 or retrieves an existing gauge with the same name.
-func NewGaugeFloat64(name string, options ...Option) metrics.GaugeFloat64 {
+func NewGaugeFloat64(name string, options ...Option) GaugeFloat64 {
 	return newGaugeFloat64(name, options...)
 }
 
 // NewTimer creates a new timer or retrieves an existing timer with the same name.
-func NewTimer(name string, options ...Option) metrics.Timer {
+func NewTimer(name string, options ...Option) Timer {
 	return newTimer(name, options...)
 }
 
 // NewMeter creates a new meter or retrieves an existing meter with the same name.
-func NewMeter(name string, options ...Option) metrics.Meter {
+func NewMeter(name string, options ...Option) Meter {
 	return newMeter(name, options...)
 }
 
@@ -70,6 +70,6 @@ func NewMeter(name string, options ...Option) metrics.Meter {
 // By default this creates a uniform sample with a reservoir size of 100.
 // Provide a different metric via the WithMetric option:
 // e.g. WithMetric(metrics.NewHistogram(metrics.NewUniformSample(100)))
-func NewHistogram(name string, options ...Option) metrics.Histogram {
+func NewHistogram(name string, options ...Option) Histogram {
 	return newHistogram(name, options...)
 }

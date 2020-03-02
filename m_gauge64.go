@@ -5,6 +5,11 @@ import (
 	"github.com/rcrowley/go-metrics"
 )
 
+// GaugeFloat64 implements go-metrics.GaugeFloat64 and possibly adds a bit functionality.
+type GaugeFloat64 interface {
+	metrics.GaugeFloat64
+}
+
 func newGaugeFloat64(name string, options ...Option) *gaugeFloat64 {
 	m := newMetric(name, options...)
 	m.suffix = suffGauge
