@@ -30,12 +30,7 @@ func newHistogram(name string, options ...Option) *histogram {
 	}
 	t.bucketTags = buildBucketTags(t.buckets, t.tags)
 	t.bucketVals = buildBucketVals(t.buckets, t.fieldName)
-
-	typeCheck := func(m metric) bool {
-		_, ok := m.(*histogram)
-		return ok
-	}
-	return m.register(t, typeCheck).(*histogram)
+	return m.register(t).(*histogram)
 }
 
 type histogram struct {

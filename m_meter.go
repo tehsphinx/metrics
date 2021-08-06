@@ -28,12 +28,7 @@ func newMeter(name string, options ...Option) *meter {
 	}
 	t.bucketTags = buildBucketTags(t.buckets, t.tags)
 	t.bucketVals = buildBucketVals(t.buckets, t.fieldName)
-
-	typeCheck := func(m metric) bool {
-		_, ok := m.(*meter)
-		return ok
-	}
-	return m.register(t, typeCheck).(*meter)
+	return m.register(t).(*meter)
 }
 
 type meter struct {

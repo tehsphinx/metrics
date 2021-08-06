@@ -77,13 +77,13 @@ func (s *baseMetric) regIncr() {
 	s.incr++
 }
 
-func (s *baseMetric) register(m metric, typeCheck typeChecker) Metric {
+func (s *baseMetric) register(m metric) Metric {
 	s.regMutex.Lock()
 	defer s.regMutex.Unlock()
 
-	return s.reg(m, typeCheck)
+	return s.reg(m)
 }
-func (s *baseMetric) reg(m metric, typeCheck typeChecker) Metric {
+func (s *baseMetric) reg(m metric) Metric {
 	regName := m.regName()
 	if s.reporter == nil {
 		log.Println("WARNING: no (default) metrics reporter set")
@@ -98,7 +98,7 @@ func (s *baseMetric) reg(m metric, typeCheck typeChecker) Metric {
 			return mtrx
 		}
 		m.regIncr()
-		return s.reg(m, typeCheck)
+		return s.reg(m)
 	}
 
 	if err := s.reporter.Register(regName, m); err != nil {

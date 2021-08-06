@@ -25,12 +25,7 @@ func newGaugeFloat64(name string, options ...Option) *gaugeFloat64 {
 		GaugeFloat64: mtrx,
 		fieldName:    m.name + m.suffix,
 	}
-	typeCheck := func(m metric) bool {
-		_, ok := m.(*gaugeFloat64)
-		return ok
-	}
-
-	return m.register(t, typeCheck).(*gaugeFloat64)
+	return m.register(t).(*gaugeFloat64)
 }
 
 type gaugeFloat64 struct {

@@ -25,12 +25,7 @@ func newGauge(name string, options ...Option) *gauge {
 		Gauge:      mtrx,
 		fieldName:  m.name + m.suffix,
 	}
-	typeCheck := func(m metric) bool {
-		_, ok := m.(*gauge)
-		return ok
-	}
-
-	return m.register(t, typeCheck).(*gauge)
+	return m.register(t).(*gauge)
 }
 
 type gauge struct {

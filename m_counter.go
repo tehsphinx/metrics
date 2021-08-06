@@ -25,12 +25,7 @@ func newCounter(name string, options ...Option) *counter {
 		Counter:    mtrx,
 		fieldName:  m.name + m.suffix,
 	}
-	typeCheck := func(m metric) bool {
-		_, ok := m.(*counter)
-		return ok
-	}
-
-	return m.register(t, typeCheck).(*counter)
+	return m.register(t).(*counter)
 }
 
 type counter struct {

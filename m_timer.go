@@ -34,12 +34,7 @@ func newTimer(name string, options ...Option) *timer {
 	}
 	t.bucketTags = buildBucketTags(t.buckets, t.tags)
 	t.bucketVals = buildBucketVals(t.buckets, t.fieldName)
-
-	typeCheck := func(m metric) bool {
-		_, ok := m.(*timer)
-		return ok
-	}
-	return m.register(t, typeCheck).(*timer)
+	return m.register(t).(*timer)
 }
 
 type timer struct {

@@ -67,7 +67,7 @@ func NewMeter(name string, options ...Option) Meter {
 }
 
 // NewHistogram creates a new histogram or retrieves an existing histogram with the same name.
-// By default this creates a uniform sample with a reservoir size of 100.
+// By default, this creates a uniform sample with a reservoir size of 100.
 // Provide a different metric via the WithMetric option:
 // e.g. WithMetric(metrics.NewHistogram(metrics.NewUniformSample(100)))
 func NewHistogram(name string, options ...Option) Histogram {
