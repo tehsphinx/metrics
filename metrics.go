@@ -75,14 +75,22 @@ func NewHistogram(name string, options ...Option) Histogram {
 	return newHistogram(name, options...)
 }
 
-// CaptureGCStats starts capturing GC stats.
+// CaptureGCStats starts capturing GC stats on the default reporter.
 func CaptureGCStats(d time.Duration) {
-	metrics.RegisterDebugGCStats(metrics.DefaultRegistry)
-	go metrics.CaptureDebugGCStats(metrics.DefaultRegistry, d)
+	captureGCStats(metrics.DefaultRegistry, d)
 }
 
-// CaptureMemStats starts capturing Memory stats.
+// CaptureMemStats starts capturing Memory stats on the default reporter.
 func CaptureMemStats(d time.Duration) {
-	metrics.RegisterRuntimeMemStats(metrics.DefaultRegistry)
-	go metrics.CaptureRuntimeMemStats(metrics.DefaultRegistry, d)
+	captureMemStats(metrics.DefaultRegistry, d)
+}
+
+func captureGCStats(registry metrics.Registry, d time.Duration) {
+	metrics.RegisterDebugGCStats(registry)
+	go metrics.CaptureDebugGCStats(registry, d)
+}
+
+func captureMemStats(registry metrics.Registry, d time.Duration) {
+	metrics.RegisterRuntimeMemStats(registry)
+	go metrics.CaptureRuntimeMemStats(registry, d)
 }

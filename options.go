@@ -78,6 +78,20 @@ func Align() ReporterOption {
 	}
 }
 
+// WithGCStats enables collection of GC stats for this reporter.
+func WithGCStats() ReporterOption {
+	return func(r *reporter) {
+		captureGCStats(r.registry, r.interval)
+	}
+}
+
+// WithMemStats enables collection of memory stats for this reporter.
+func WithMemStats() ReporterOption {
+	return func(r *reporter) {
+		captureMemStats(r.registry, r.interval)
+	}
+}
+
 func withDBClient(client dbClient) ReporterOption {
 	return func(r *reporter) {
 		r.client = client
