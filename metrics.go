@@ -9,6 +9,7 @@ package metrics
 
 import (
 	"errors"
+	"time"
 
 	"github.com/rcrowley/go-metrics"
 )
@@ -72,4 +73,16 @@ func NewMeter(name string, options ...Option) Meter {
 // e.g. WithMetric(metrics.NewHistogram(metrics.NewUniformSample(100)))
 func NewHistogram(name string, options ...Option) Histogram {
 	return newHistogram(name, options...)
+}
+
+// CaptureGCStats starts capturing GC stats.
+func CaptureGCStats(d time.Duration) {
+	metrics.RegisterDebugGCStats(metrics.DefaultRegistry)
+	go metrics.CaptureDebugGCStats(metrics.DefaultRegistry, d)
+}
+
+// CaptureMemStats starts capturing Memory stats.
+func CaptureMemStats(d time.Duration) {
+	metrics.RegisterRuntimeMemStats(metrics.DefaultRegistry)
+	go metrics.CaptureRuntimeMemStats(metrics.DefaultRegistry, d)
 }
